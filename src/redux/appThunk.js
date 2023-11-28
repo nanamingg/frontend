@@ -23,3 +23,42 @@ export const createTodo = createAsyncThunk(
     return response.data.todo;
   }
 );
+
+export const toggleDone = createAsyncThunk(
+  "appSlice/toggleDone",
+  async ({ todoId }) => {
+    const response = await axios.put(
+      `http://localhost:3010/todos/${todoId}/done`
+    );
+
+    return response.data.todo;
+  }
+);
+
+export const updateTodo = createAsyncThunk(
+  "appSlice/updateTodo",
+  async ({ todoId, title }) => {
+    const response = await axios.put(
+      `http://localhost:3010/todos/${todoId}`,
+      {
+        title,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return response.data.todo;
+  }
+);
+
+export const deleteTodo = createAsyncThunk(
+  "appSlice/deleteTodo",
+  async ({ todoId }) => {
+    await axios.delete(`http://localhost:3010/todos/${todoId}`);
+
+    return todoId;
+  }
+);
